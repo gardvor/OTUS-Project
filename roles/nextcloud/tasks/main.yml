@@ -1,0 +1,46 @@
+---
+- name: Install epel
+  yum:
+    name: 
+      - epel-release
+      - yum-utils
+      - unzip
+      - curl
+      - wget
+      - bash-completion
+      - policycoreutils-python-utils
+      - mlocate
+      - bzip2
+    state: present
+    
+
+- name: Install nginx
+  yum:
+    name: nginx 
+    state: present
+
+- name: Install remi-repo
+  shell: |
+    dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+
+- name: Install yum-utils
+  yum:
+    name: 
+      - yum-utils
+
+- name: Enable module stream for php 7.4
+  shell: |
+    yum module reset php -y
+    yum module install php:remi-7.4 -y
+
+- name: Install php 7.4
+  yum:
+    name:
+      - php
+      - php-gd
+      - php-mbstring
+      - php-intl
+      - php-pecl-apcu
+      - php-mysqlnd
+      - php-opcache
+      - php-fpm

@@ -1,0 +1,24 @@
+[all:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_pass=vagrant
+
+[firewall]
+firewall ansible_host=192.168.10.10
+
+[nextcloud]
+nextcloud ansible_host=192.168.10.20
+
+[db]
+db ansible_host=192.168.10.30
+dbreplica ansible_host=192.168.10.40
+
+[logserver]
+logserver ansible_host=192.168.10.50
+
+[monitoring]
+monitoring ansible_host=192.168.10.60
+
+[backup]
+backup ansible_host=192.168.10.70
+
+

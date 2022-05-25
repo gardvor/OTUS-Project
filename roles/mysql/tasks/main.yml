@@ -1,0 +1,12 @@
+---
+  - name: Mysql Install 
+    yum:  
+      name:
+        - mysql-server
+      state: present 
+
+  - name: Start Mysql   
+    systemd:
+      name: mysqld
+      state: started
+      enabled: yes      

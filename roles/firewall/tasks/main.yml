@@ -1,0 +1,15 @@
+---
+- hosts: firewall
+  gather_facts: true
+  become: true
+
+  - name:
+    yum:
+      name:
+        - nano
+        - traceroute
+        - iptables
+        - iptables-services
+        - epel-release
+      state: present
+      update_cache: true

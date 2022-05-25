@@ -1,0 +1,21 @@
+---
+  - name: Install epel repository
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install chrony
+    yum:
+      name: 
+        - chrony
+        - nano  
+
+  - name: Set timezone to Europe/Moscow
+    timezone:
+      name: Europe/Moscow      
+
+  - name: Enable Chronyd
+    systemd:  
+      name: chronyd 
+      state: started
+      enabled: yes  
