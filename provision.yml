@@ -1,0 +1,22 @@
+---
+- hosts: all
+  
+  name: Project provision
+  become: true
+  roles:
+    - start
+
+- hosts: db_all
+  name: Mysql install
+  become: true
+  roles:
+    - mysql
+
+- hosts: nextcloud
+  name: NextCloud Install
+  become: true
+  roles:
+    - nextcloud
+
+
+#    - role: firewall

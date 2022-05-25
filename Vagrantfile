@@ -22,11 +22,11 @@ config.vm.define "db" do |db|
   db.vm.provision "shell", run: "always", path: "ssh_password_on.sh"
 end
 
-#config.vm.define "dbreplica" do |dbreplica|
-#  dbreplica.vm.hostname = "db"
-#  dbreplica.vm.network "private_network", ip: "192.168.10.40"
-#  dbreplica.vm.provision "shell", run: "always", path: "ssh_password_on.sh"
-#end
+config.vm.define "dbreplica" do |dbreplica|
+  dbreplica.vm.hostname = "db"
+  dbreplica.vm.network "private_network", ip: "192.168.10.40"
+  dbreplica.vm.provision "shell", run: "always", path: "ssh_password_on.sh"
+end
 #config.vm.define "logserver" do |logserver|
 #  logserver.vm.hostname = "logserver"
 #  logserver.vm.network "private_network", ip: "192.168.10.50"
