@@ -37,10 +37,29 @@
   yum:
     name:
       - php
+      - php-fpm
+      - php-pdo
+      - php-zip
+      - php-dom
+      - php-mysqli  
       - php-gd
       - php-mbstring
+      - php-json
+      - php-process
+      - php-bcmath
+      - php-gmp
+      - php-imagick
       - php-intl
-      - php-pecl-apcu
       - php-mysqlnd
       - php-opcache
-      - php-fpm
+
+- name: Copy www.conf
+  copy:
+    src: www.conf
+    dest: /etc/php-fpm.d/www.conf
+
+- name: Start php-fpm
+  systemd:
+    name: php-fpm
+    state: started
+    enabled: yes    
