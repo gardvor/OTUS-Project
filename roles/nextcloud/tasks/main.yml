@@ -1,5 +1,5 @@
 ---
-- name: Install packges
+- name: Install packages
   yum:
     name: 
       - epel-release
@@ -12,7 +12,10 @@
       - mlocate
       - bzip2
     state: present
-    
+
+- name: Selinux disable
+  shell: |
+    setenforce 0    
 
 - name: Install nginx
   yum:
@@ -52,14 +55,55 @@
       - php-intl
       - php-mysqlnd
       - php-opcache
+    state: present  
 
 - name: Copy www.conf
   copy:
     src: www.conf
     dest: /etc/php-fpm.d/www.conf
 
-- name: Start php-fpm
+- name: Start & Enable php-fpm
   systemd:
     name: php-fpm
     state: started
-    enabled: yes    
+    enabled: yes   
+
+- name: Copy nginx config
+  copy:
+    src: cloud.ramec.ru.conf
+    dest: /etc/nginx/conf.d/cloud.ramec.ru.conf
+
+- name: Add SSL directory
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+
+- name: Add SSL keys
+  shell: |
+    cd /etc/nginx/ssl
+    openssl req -new -x509 -days 1461 -nodes -out cert.pem -keyout cert.key -subj "/C=RU/ST=SPb/L=SPb/O=Global Security/OU=IT Department/CN=cloud.ramec.ru/CN=nextcloud"
+
+
+
+- name: Start & enable NGINX
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Download nextcloud distr
+  get_url:
+    url: https://download.nextcloud.com/server/releases/nextcloud-24.0.1.zip
+    dest: /tmp/nextcloud-24.0.1.zip
+    checksum: sha256:175a7ecb226104b4f327c30ad8b6164a429ae8a2e2ebaf4aa7803ed46c0b9079
+
+- name: Unzip nextcloud
+  unarchive:
+    src: /tmp/nextcloud-24.0.1.zip
+    dest: /var/www
+    remote_src: yes
+    owner: nginx
+    group: nginx
+
+
+

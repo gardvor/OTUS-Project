@@ -7,12 +7,15 @@ Vagrant.configure(2) do |config|
   config.vm.define "firewall" do |firewall|
   firewall.vm.hostname = "firewall"
   firewall.vm.network "private_network", ip: "192.168.10.10"
+  firewall.vm.network "forwarded_port", guest: 8080, host: 8080
   firewall.vm.provision "shell", run: "always", path: "ssh_password_on.sh"
 end
 
 config.vm.define "nextcloud" do |nextcloud|
   nextcloud.vm.hostname = "nextcloud"
   nextcloud.vm.network "private_network", ip: "192.168.10.20"
+  nextcloud.vm.network "forwarded_port", guest: 8081, host: 8081
+  nextcloud.vm.network "forwarded_port", guest: 8082, host: 8082
   nextcloud.vm.provision "shell", run: "always", path: "ssh_password_on.sh"
 end
 
