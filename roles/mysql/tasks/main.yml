@@ -8,6 +8,11 @@
         - python3-PyMySQL
       state: present 
 
+  - name: Copy MySQL config file
+    copy:
+      src: mysql-server.cnf
+      dest: /etc/my.cnf.d/mysql-server.cnf   
+
   - name: Start Mysql   
     systemd:
       name: mysqld
@@ -37,6 +42,7 @@
       login_user: 'root'
       login_password: '12345678'
       name: nextcloud
+      host: 192.168.10.20
       password: nextcloud
       priv: 'nextcloud.*:ALL,GRANT'
       state: present
